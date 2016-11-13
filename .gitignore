@@ -49,3 +49,4 @@ settings.py
 
 .idea
 *.pyc
+*.xlsx

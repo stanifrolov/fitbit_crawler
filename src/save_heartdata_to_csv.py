@@ -1,4 +1,6 @@
 import fitbit
+import xlsxwriter
+import collections
 
 from src.settings import client_id, client_secret, access_token, refresh_token
 
@@ -16,11 +18,24 @@ def intraday_heart(date):
     for entry in heartrate_dataset:
         heart[entry['time'].encode('ascii')] = entry['value']
 
-    return sorted(heart.items())
+    heart = collections.OrderedDict(sorted(heart.items()))
 
-date_of_interest = '2016-10-15'
-heartrate_data = intraday_heart(date_of_interest)
+    workbook = xlsxwriter.Workbook('heartrate.xlsx')
+    worksheet = workbook.add_worksheet()
 
-for date, heartrate in heartrate_data:
-    print date, heartrate
+    row = 0
+    col = 0
 
+    worksheet.write(row, col, 'Date')
+    worksheet.write(row, col + 1, 'Heartrate')
+
+    row += 1
+
+    for key in heart.keys():
+        row += 1
+        worksheet.write(row, col, key)
+        worksheet.write(row, col + 1, heart[key])
+
+    workbook.close()
+
+intraday_heart('2016-10-15')
