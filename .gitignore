@@ -48,3 +48,4 @@ Temporary Items
 settings.py
 
 .idea
+*.pyc
