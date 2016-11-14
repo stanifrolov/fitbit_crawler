@@ -6,6 +6,7 @@ def retrieve_intraday_heart(authd_client, client_id, date):
     """
     Retrieves intraday heart data and saves it in a xlsx document.
     :param authd_client: authorized FitbitOauth2Client object
+    :param client_id: fitbit client id as
     :param date: date of which data shall be retrieved
     """
     heart = authd_client.intraday_time_series('activities/heart', date)
