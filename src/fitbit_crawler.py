@@ -1,16 +1,13 @@
-import fitbit
 import xlsxwriter
 import collections
 
-from src.settings import client_id, client_secret, access_token, refresh_token
 
-authd_client = fitbit.Fitbit(client_id,
-                             client_secret,
-                             access_token=access_token,
-                             refresh_token=refresh_token)
-
-
-def intraday_heart(date):
+def retrieve_intraday_heart(authd_client, client_id, date):
+    """
+    Retrieves intraday heart data and saves it in a xlsx document.
+    :param authd_client: authorized FitbitOauth2Client object
+    :param date: date of which data shall be retrieved
+    """
     heart = authd_client.intraday_time_series('activities/heart', date)
     heartrate_dataset = heart['activities-heart-intraday']['dataset']
     heart = {}
@@ -20,7 +17,7 @@ def intraday_heart(date):
 
     heart = collections.OrderedDict(sorted(heart.items()))
 
-    workbook = xlsxwriter.Workbook('heartrate.xlsx')
+    workbook = xlsxwriter.Workbook('heart-intraday' + '-' + client_id + '-' + date + '.xlsx')
     worksheet = workbook.add_worksheet()
 
     row = 0
@@ -37,5 +34,3 @@ def intraday_heart(date):
         worksheet.write(row, col + 1, heart[key])
 
     workbook.close()
-
-intraday_heart('2016-10-15')
