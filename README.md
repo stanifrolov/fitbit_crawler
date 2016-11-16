@@ -1,5 +1,5 @@
 # fitbit_crawler
-Fibit data crawler using the python fibit API implementation https://github.com/orcasgit/python-fitbit
+Fibit data crawler using the python fitbit API implementation https://github.com/orcasgit/python-fitbit
 
 ## How to use
 
